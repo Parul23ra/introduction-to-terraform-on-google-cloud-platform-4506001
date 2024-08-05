@@ -9,27 +9,37 @@ Variables "region" {
   default  = "us-west1"
 }
 
-data "google_compute_image" "ubuntu" {
-  most_recent = true
-  project     = "ubuntu-os-cloud" 
-  family      = "ubuntu-2204-lts"
+Variables "network_name" {
+  type     = string
+  default  = "app"
 }
 
-resource "google_compute_instance" "web" {
-  name         = "web"
-  machine_type = "e2-micro"
+Variables "network_ip_range" {
+  type     = string
+  default  = "10.2.0.0/16"
+}
+
+Variables "image_project" {
+  type     = string
+  default  = "ubuntu-os-cloud"
+}
+
+Variables "image_family" {
+  type     = string
+  default  = "ubuntu-2204-lts"
+}
+
+
+Variables "app_name" {
+  type     = string
+  default  = "blog"
+}
+
+Variables "machine_type" {
+  type     = string
+  default  = "e2-micro"
+}
+
+
 
   
-  boot_disk {
-    initialize_params {
-      image = data.google_compute_image.ubuntu.self_link
-    }
-  }
-  network_interface {
-   subnetwork = "default"
-   access_config {
-      # Leave empty for dynamic public IP
-    }
-  }  
-
-}
